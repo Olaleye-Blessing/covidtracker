@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Select from "react-select";
 
-const SingleSelectSearch = ({ items, setSearchedValue }) => {
+const SingleSelectSearch = ({ items, setSearchedValue, defaultValue }) => {
     const handleChange = ({ value, cathegory }) => {
         setSearchedValue({ value, cathegory });
     };
@@ -35,6 +35,7 @@ const SingleSelectSearch = ({ items, setSearchedValue }) => {
             className="mt-7 shadow-sm max-w-lg mx-auto border-0 outline-none"
             formatOptionLabel={formatOptionLabel}
             placeholder="search for country/continent..."
+            defaultValue={defaultValue}
         ></Select>
     );
 };

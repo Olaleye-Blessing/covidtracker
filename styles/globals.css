@@ -3,8 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
-    a:hover, button:hover {
-        trnai
+@layer utilities {
+    .loader {
+        /* border-color: "#0c90f5"; */
+        /* border-color: "#0c90f5"; */
+        border-top-color: #3498db;
+        -webkit-animation: spinner 1.5s linear infinite;
+        animation: loader-spin 1.5s linear infinite;
     }
-} */
+
+    @-webkit-keyframes loader-spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes loader-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}

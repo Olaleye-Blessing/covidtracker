@@ -1,53 +1,55 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// import HomeSearch from "../components/Form/HomeSearch";
 import SingleSelectSearch from "../components/Form/SelectSearch/SingleSelectSearch";
 import { BiWorld } from "react-icons/bi";
 
+import { continents } from "../utility/listOfContinents";
+import Map from "../components/Map/Map";
+import Spinner from "../components/Spinner";
+
 export const getStaticProps = async () => {
     try {
-        let req = await fetch(`https://restcountries.eu/rest/v2/all`);
-        let countries = await req.json();
+        let allCountriesUrl = `https://restcountries.eu/rest/v2/all`,
+            worldCovidInfo = `https://disease.sh/v3/covid-19/all`;
+
+        let results = await Promise.all([
+            fetch(allCountriesUrl),
+            fetch(worldCovidInfo),
+        ]).then((responses) => Promise.all(responses.map((r) => r.json())));
+
+        let [countries, worldInfo] = results;
 
         return {
             props: {
                 countries,
+                worldInfo,
             },
         };
     } catch (error) {
         console.log(error);
+        return {
+            props: {
+                error,
+            },
+        };
     }
 };
 
-const Home = ({ countries }) => {
+const Home = ({ countries, worldInfo }) => {
+    // console.log(error);
+    // console.log(countries, worldInfo);
+
+    const [regionLoading, setRegionLoading] = useState(false);
+    const [regionError, setRegionError] = useState(null);
+    const [regionData, setRegionData] = useState(null); // data to display
+
     countries = countries.map(({ name, flag }) => ({
         value: name,
         label: name,
         flag,
         cathegory: "country",
     }));
-
-    let continents = [
-        { value: "Africa", label: "Africa", cathegory: "continent" },
-        {
-            value: "Australia-Oceania",
-            label: "Australia-Oceania",
-            cathegory: "continent",
-        },
-        { value: "Asia", label: "Asia", cathegory: "continent" },
-        { value: "Europe", label: "Europe" },
-        {
-            value: "North America",
-            label: "North America",
-            cathegory: "continent",
-        },
-        {
-            value: "South America",
-            label: "South America",
-            cathegory: "continent",
-        },
-    ];
 
     let items = [
         {
@@ -70,8 +72,57 @@ const Home = ({ countries }) => {
         },
     ];
 
-    const [searchedValue, setSearchedValue] = useState(null);
-    console.log(searchedValue);
+    // const [searchedValue, setSearchedValue] = useState(null);
+    const [searchedValue, setSearchedValue] = useState({ value: "World" });
+
+    // set all detials related to region at once
+    const setRegionDetails = (data = null, loading = false, err = null) => {
+        setRegionLoading(loading);
+        setRegionError(err);
+        setRegionData(data);
+    };
+
+    useEffect(() => {
+        if (!regionData) {
+            setRegionData(worldInfo);
+            return;
+        }
+
+        let regionAbort = new AbortController();
+        let regionSignal = regionAbort.signal;
+
+        const fetchRegionData = async () => {
+            let url = new URL(`https://disease.sh/v3/covid-19/`);
+            let { value, cathegory } = searchedValue;
+
+            if (value === "World") {
+                url.pathname += `all`;
+            } else if (cathegory === "continent") {
+                url.pathname += `continents/${value}`;
+            } else if (cathegory === "country") {
+                url.pathname += `countries/${value}`;
+            }
+
+            // setRegionLoading(true);
+            setRegionDetails(null, true);
+
+            try {
+                let req = await fetch(url, { signal: regionSignal });
+                let data = await req.json();
+                setRegionDetails(data);
+            } catch (error) {
+                console.log(error);
+                if (error.name !== "AbortError") {
+                    setRegionDetails(null, false, error.message);
+                } else {
+                    console.log("Aborted");
+                }
+            }
+        };
+
+        fetchRegionData();
+        return () => regionAbort.abort();
+    }, [searchedValue]);
 
     return (
         <>
@@ -81,17 +132,19 @@ const Home = ({ countries }) => {
                     items={items}
                     searchedValue={searchedValue}
                     setSearchedValue={setSearchedValue}
+                    defaultValue=""
                 />
+
+                {regionLoading && <Spinner margin="mt-8" />}
+                {regionError && <div>Error...</div>}
+                {regionData && (
+                    <div>
+                        <Map data={regionData} />
+                    </div>
+                )}
             </main>
         </>
     );
 };
 
 export default Home;
-{
-    /* <HomeSearch
-                    items={items}
-                    searchedValue={searchedValue}
-                    setSearchedValue={setSearchedValue}
-                /> */
-}
