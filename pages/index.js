@@ -2,11 +2,15 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 import SingleSelectSearch from "../components/Form/SelectSearch/SingleSelectSearch";
-import { BiWorld } from "react-icons/bi";
+import { VscCompareChanges } from "react-icons/vsc";
 
 import { continents } from "../utility/listOfContinents";
 import Map from "../components/Map/Map";
 import Spinner from "../components/Spinner";
+import fetchMultipleData from "../utility/fetchMultipleData";
+import determineRegionUrl from "../utility/determineRegionUrlPath";
+import worldWideLabelAndOption from "../utility/worldWideLabelAndOption";
+import fetchSingleData from "../utility/fetchSingleData";
 
 export const getStaticProps = async () => {
     try {
@@ -37,12 +41,15 @@ export const getStaticProps = async () => {
 };
 
 const Home = ({ countries, worldInfo }) => {
-    // console.log(error);
-    // console.log(countries, worldInfo);
-
     const [regionLoading, setRegionLoading] = useState(false);
     const [regionError, setRegionError] = useState(null);
-    const [regionData, setRegionData] = useState(null); // data to display
+    const [searchedValue, setSearchedValue] = useState({ value: "World" });
+    const [multipleSelected, setMultipleSelected] = useState(false);
+
+    // data to display
+    // null for initial load
+    // undefined for not found data
+    const [regionData, setRegionData] = useState(null);
 
     countries = countries.map(({ name, flag }) => ({
         value: name,
@@ -52,16 +59,7 @@ const Home = ({ countries, worldInfo }) => {
     }));
 
     let items = [
-        {
-            label: "Worldwide",
-            options: [
-                {
-                    label: "World",
-                    "value": "World",
-                    icon: <BiWorld className="text-blue text-xl" />,
-                },
-            ],
-        },
+        worldWideLabelAndOption,
         {
             label: "Continents",
             options: [...continents],
@@ -72,76 +70,116 @@ const Home = ({ countries, worldInfo }) => {
         },
     ];
 
-    // const [searchedValue, setSearchedValue] = useState(null);
-    const [searchedValue, setSearchedValue] = useState({ value: "World" });
-
     // set all detials related to region at once
-    const setRegionDetails = (data = null, loading = false, err = null) => {
+    const setRegionDetails = (
+        data = undefined,
+        loading = false,
+        err = null
+    ) => {
         setRegionLoading(loading);
         setRegionError(err);
         setRegionData(data);
     };
 
+    const toggleMultiple = (e) => {
+        setMultipleSelected((prev) => !prev);
+        setRegionData(null);
+    };
+
     useEffect(() => {
-        if (!regionData) {
-            setRegionData(worldInfo);
+        // this is for initial load
+        if (searchedValue === "" && regionData === null) {
+            setRegionDetails(worldInfo, false, null);
             return;
         }
+
+        setRegionLoading(true);
 
         let regionAbort = new AbortController();
         let regionSignal = regionAbort.signal;
 
-        const fetchRegionData = async () => {
+        if (multipleSelected) {
             let url = new URL(`https://disease.sh/v3/covid-19/`);
-            let { value, cathegory } = searchedValue;
 
-            if (value === "World") {
-                url.pathname += `all`;
-            } else if (cathegory === "continent") {
-                url.pathname += `continents/${value}`;
-            } else if (cathegory === "country") {
-                url.pathname += `countries/${value}`;
-            }
+            let urls = searchedValue.map(
+                (dat) => `${url}${determineRegionUrl(dat)}`
+            );
 
-            // setRegionLoading(true);
-            setRegionDetails(null, true);
+            let fetchingMultiple = async () => {
+                let { success, err } = await fetchMultipleData(urls);
+                setRegionDetails(success);
+            };
+            fetchingMultiple();
+        } else {
+            const fetchRegionData = async () => {
+                let url = new URL(`https://disease.sh/v3/covid-19/`);
 
-            try {
-                let req = await fetch(url, { signal: regionSignal });
-                let data = await req.json();
-                setRegionDetails(data);
-            } catch (error) {
-                console.log(error);
-                if (error.name !== "AbortError") {
+                url.pathname += determineRegionUrl(searchedValue);
+
+                setRegionLoading(true);
+                setRegionError(false);
+
+                try {
+                    let data = await fetchSingleData(url, regionSignal);
+                    setRegionDetails(data);
+                } catch (error) {
                     setRegionDetails(null, false, error.message);
-                } else {
-                    console.log("Aborted");
                 }
-            }
-        };
+            };
 
-        fetchRegionData();
+            fetchRegionData();
+        }
         return () => regionAbort.abort();
     }, [searchedValue]);
+
+    // show an info instead of map when comparison button is clicked
+    useEffect(() => {
+        setRegionError("search/compare for detail(s)...");
+    }, [multipleSelected]);
 
     return (
         <>
             <Head></Head>
-            <main className="px-4">
-                <SingleSelectSearch
-                    items={items}
-                    searchedValue={searchedValue}
-                    setSearchedValue={setSearchedValue}
-                    defaultValue=""
-                />
-
-                {regionLoading && <Spinner margin="mt-8" />}
-                {regionError && <div>Error...</div>}
-                {regionData && (
-                    <div>
-                        <Map data={regionData} />
+            <main className="px-4 mt-7 ">
+                <section className="mx-auto flex justify-center">
+                    <div className="flex items-center justify-center text-lg mr-1">
+                        <button
+                            className={`text-lg ${
+                                multipleSelected &&
+                                "text-blue transform rotate-45"
+                            } hover:text-blue-lighter transition`}
+                            title="click to compare two and/or countries"
+                            onClick={toggleMultiple}
+                        >
+                            <VscCompareChanges />
+                        </button>
                     </div>
-                )}
+                    <SingleSelectSearch
+                        items={items}
+                        searchedValue={searchedValue}
+                        setSearchedValue={setSearchedValue}
+                        regionData={regionData}
+                        multipleSelected={multipleSelected}
+                    />
+                </section>
+
+                {/* display loading/error/map */}
+                <section className="mt-8">
+                    {regionLoading ? (
+                        <Spinner />
+                    ) : regionError ? (
+                        <div className="text-center">{regionError}</div>
+                    ) : (
+                        regionData && (
+                            <figure>
+                                <Map
+                                    data={regionData}
+                                    multipleSelected={multipleSelected}
+                                />
+                            </figure>
+                        )
+                    )}
+                </section>
             </main>
         </>
     );

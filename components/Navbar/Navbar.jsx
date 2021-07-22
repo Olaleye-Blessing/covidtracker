@@ -20,10 +20,10 @@ const Navbar = () => {
                 <GiNewspaper className="group-hover:text-blue transition-colors duration-400" />
             ),
         },
-        {
-            path: "Compare",
-            icon: <VscCompareChanges className="group-hover:text-blue" />,
-        },
+        // {
+        // path: "Compare",
+        // icon: <VscCompareChanges className="group-hover:text-blue" />,
+        // },
         {
             path: "Favourites",
             icon: <AiOutlineStar className="group-hover:text-blue" />,
