@@ -142,7 +142,7 @@ const Home = ({ countries, worldInfo }) => {
             <Head></Head>
             <main className="px-4 mt-7 ">
                 <section className="mx-auto flex justify-center">
-                    <div className="flex items-center justify-center text-lg mr-1">
+                    <div className="flex  items-center justify-center text-lg mr-1">
                         <button
                             className={`text-lg ${
                                 multipleSelected &&
