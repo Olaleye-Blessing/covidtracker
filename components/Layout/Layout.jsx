@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 import Navbar from "./../Navbar/Navbar";
 
@@ -8,9 +9,9 @@ const Layout = ({ children }) => {
             <Head>
                 <meta
                     name="description"
-                    content="Get information about different countries"
+                    content="Covid details for countries, continents and the world in general"
                 />
-                <meta name="revised" content="7/2/2021" />
+                {/* <meta name="revised" content="7/2/2021" /> */}
                 <meta name="Authur" content="Olaleye Blessing" />
                 <meta
                     httpEquiv="Content-Type"
@@ -18,9 +19,21 @@ const Layout = ({ children }) => {
                 />
                 <title>COVID TRACKER</title>
             </Head>
-            <Navbar />
-            <>{children}</>
-            {/* <Footer /> */}
+            <>
+                <Toaster
+                    toastOptions={{
+                        error: {
+                            style: {
+                                background: "#e99",
+                                color: "#fff",
+                            },
+                        },
+                    }}
+                />
+                <Navbar />
+                <>{children}</>
+                {/* <Footer /> */}
+            </>
         </>
     );
 };

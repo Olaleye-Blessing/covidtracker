@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 import SingleSelectSearch from "../components/Form/SelectSearch/SingleSelectSearch";
 import { VscCompareChanges } from "react-icons/vsc";
@@ -11,6 +12,7 @@ import fetchMultipleData from "../utility/fetchMultipleData";
 import determineRegionUrl from "../utility/determineRegionUrlPath";
 import worldWideLabelAndOption from "../utility/worldWideLabelAndOption";
 import fetchSingleData from "../utility/fetchSingleData";
+import filterValidRegionResult from "../utility/filterValidRegionResult";
 
 export const getStaticProps = async () => {
     try {
@@ -106,8 +108,23 @@ const Home = ({ countries, worldInfo }) => {
             );
 
             let fetchingMultiple = async () => {
-                let { success, err } = await fetchMultipleData(urls);
-                setRegionDetails(success);
+                // get all responses for searched regions
+                let { responses } = await fetchMultipleData(urls);
+
+                // get names of searched region
+                let names = searchedValue.map(({ value }) => value);
+
+                // seperate valid responses from invalid ones
+                let { valid, invalid } = filterValidRegionResult(
+                    names,
+                    responses
+                );
+
+                // this is for result not found
+                invalid.forEach((err) => toast.error(err));
+
+                // show valid responses
+                setRegionDetails(valid);
             };
             fetchingMultiple();
         } else {
