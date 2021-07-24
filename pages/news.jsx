@@ -1,23 +1,22 @@
 import Head from "next/head";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import ButtonText from "../components/ButtonText";
 import Spinner from "../components/Spinner";
 import newsUrl from "../utility/News/NewsUrl";
 import NewsLists from "../components/News/NewsLists";
-import NewsHeading from "../components/News/NewsHeading";
 
 const News = () => {
     // TrendingNewsAPI NewsSearchAPI
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
-    const [itemsPerPage, setItemsPerPage] = useState(20);
+    // const [itemsPerPage, setItemsPerPage] = useState(20);
     const [urlPath, setUrlPath] = useState("NewsSearchAPI");
     const [news, setNews] = useState([]);
     const [loadingMore, setLoadingMore] = useState(false);
     const [initialLoading, setInitialLoading] = useState(true);
-    const [newsHeading, setNewsHeading] = useState({});
+    let itemsPerPage = 20;
 
     const fetchData = useCallback(() => {
         let url = newsUrl(urlPath, currentPage, itemsPerPage);
@@ -62,19 +61,17 @@ const News = () => {
         setInitialLoading(true);
     }, [urlPath]);
 
-    console.log(news);
-    console.log(urlPath);
-
     let activeClass = "bg-blue text-white font-semibold";
 
     return (
         <>
             <Head></Head>
-            <main className="px-4 mt-7">
-                <div className="flex items-center justify-end px-4 py-4">
+            <main className="mt-1 px-4">
+                <div className="flex items-center justify-end py-4">
                     <ButtonText
                         text="all"
-                        extraClass={`mr-5 bg-blue-lighter hover:text-white hover:font-semibold ${
+                        // bg-blue-lighter border-2 border-blue-lighter
+                        extraClass={`mr-3 bg-blue-lighter shadow-inner hover:text-white hover:font-semibold ${
                             urlPath === "NewsSearchAPI" && activeClass
                         }`}
                         onClick={() => {
@@ -84,7 +81,7 @@ const News = () => {
                     />
                     <ButtonText
                         text="trending"
-                        extraClass={`bg-blue-lighter ${
+                        extraClass={`bg-blue-lighter shadow-inner hover:text-white hover:font-semibold ${
                             urlPath === "TrendingNewsAPI" && activeClass
                         }`}
                         onClick={() => {
@@ -93,10 +90,9 @@ const News = () => {
                         }}
                     />
                 </div>
-                {initialLoading && <Spinner />}
+                {initialLoading && <Spinner extraClass="mt-7" />}
                 {!initialLoading && (
                     <>
-                        {/* <NewsHeading /> */}
                         <section className="mb-8">
                             {news.length > 0 && <NewsLists news={news} />}
                         </section>
