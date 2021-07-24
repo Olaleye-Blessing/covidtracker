@@ -5,11 +5,13 @@
 
 @layer utilities {
     .loader {
-        /* border-color: "#0c90f5"; */
-        /* border-color: "#0c90f5"; */
         border-top-color: #3498db;
         -webkit-animation: spinner 1.5s linear infinite;
         animation: loader-spin 1.5s linear infinite;
+    }
+
+    .grid-cols-auto-fit-news {
+        grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
     }
 
     @-webkit-keyframes loader-spin {

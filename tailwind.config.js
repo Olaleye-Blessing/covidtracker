@@ -21,7 +21,12 @@ module.exports = {
                 DEFAULT: "#fff",
             },
             red: {
+                light: "#faa2b0",
                 DEFAULT: "#f00",
+            },
+            black: {
+                overlay: "rgba(0, 0, 0, 0.8)",
+                DEFAULT: "#000",
             },
         },
     },

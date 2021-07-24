@@ -1,15 +1,20 @@
-const Spinner = ({ margin }) => {
+const Spinner = ({ margin, width, height, border, borderTop, extraClass }) => {
     return (
-        <div className={`${margin}`}>
-            <div className="flex justify-center items-center">
-                <div className="loader ease-linear rounded-full border-8 border-t-8 h-20 w-20 border-blue-lighter"></div>
-            </div>
+        <div className={`flex justify-center items-center ${margin}`}>
+            <div
+                className={`loader ease-linear rounded-full border-blue-lighter ${width} ${height} ${border} ${borderTop} ${extraClass}`}
+            ></div>
         </div>
     );
 };
 
 Spinner.defaultProps = {
     margin: "mt-0",
+    width: "w-20",
+    height: "h-20",
+    border: "border-8",
+    borderTop: "border-t-8",
+    extraClass: "",
 };
 
 export default Spinner;
