@@ -5,13 +5,13 @@ import ButtonText from "../components/ButtonText";
 import Spinner from "../components/Spinner";
 import newsUrl from "../utility/News/NewsUrl";
 import NewsLists from "../components/News/NewsLists";
+import NewsHeaderButton from "../components/pages/News/NewsHeaderButton";
 
 const News = () => {
     // TrendingNewsAPI NewsSearchAPI
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
-    // const [itemsPerPage, setItemsPerPage] = useState(20);
     const [urlPath, setUrlPath] = useState("NewsSearchAPI");
     const [news, setNews] = useState([]);
     const [loadingMore, setLoadingMore] = useState(false);
@@ -49,6 +49,11 @@ const News = () => {
         setLoadingMore(true);
     };
 
+    const changePath = (path) => {
+        setUrlPath(path);
+        fetchData();
+    };
+
     useEffect(() => {
         fetchData();
     }, [currentPage]);
@@ -62,34 +67,18 @@ const News = () => {
     }, [urlPath]);
 
     let activeClass = "bg-blue text-white font-semibold";
+    let pathClass = `shadow-inner hover:text-white transition duration-500`;
 
     return (
         <>
             <Head></Head>
             <main className="mt-1 px-4">
-                <div className="flex items-center justify-end py-4">
-                    <ButtonText
-                        text="all"
-                        // bg-blue-lighter border-2 border-blue-lighter
-                        extraClass={`mr-3 bg-blue-lighter shadow-inner hover:text-white hover:font-semibold ${
-                            urlPath === "NewsSearchAPI" && activeClass
-                        }`}
-                        onClick={() => {
-                            setUrlPath("NewsSearchAPI");
-                            fetchData();
-                        }}
-                    />
-                    <ButtonText
-                        text="trending"
-                        extraClass={`bg-blue-lighter shadow-inner hover:text-white hover:font-semibold ${
-                            urlPath === "TrendingNewsAPI" && activeClass
-                        }`}
-                        onClick={() => {
-                            setUrlPath("TrendingNewsAPI");
-                            fetchData();
-                        }}
-                    />
-                </div>
+                <NewsHeaderButton
+                    pathClass={pathClass}
+                    urlPath={urlPath}
+                    activeClass={activeClass}
+                    changePath={changePath}
+                />
                 {initialLoading && <Spinner extraClass="mt-7" />}
                 {!initialLoading && (
                     <>
@@ -99,7 +88,9 @@ const News = () => {
                         {totalPages && (
                             <div className="flex items-center justify-center mb-8">
                                 <ButtonText
-                                    text="load more"
+                                    text={`${
+                                        loadingMore ? "loading..." : "load more"
+                                    }`}
                                     extraClass={`flex items-center justify-center gap-2 bg-blue-lighter ${
                                         loadingMore && "cursor-not-allowed"
                                     }`}

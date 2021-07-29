@@ -1,12 +1,15 @@
 // import 'tailwindcss/tailwind.css'
 import Layout from "../components/Layout/Layout";
+import { AppWrapper } from "../context/appContext";
 import "./../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <AppWrapper>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </AppWrapper>
     );
 }
 

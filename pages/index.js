@@ -13,6 +13,18 @@ import determineRegionUrl from "../utility/determineRegionUrlPath";
 import worldWideLabelAndOption from "../utility/worldWideLabelAndOption";
 import fetchSingleData from "../utility/fetchSingleData";
 import filterValidRegionResult from "../utility/filterValidRegionResult";
+import { AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
+import { GiConsoleController } from "react-icons/gi";
+import {
+    multipleFavoriteFound,
+    multipleFavorites,
+} from "../utility/favourites/multipleFavorites";
+import {
+    singleFavourite,
+    singleFavouriteFound,
+} from "../utility/favourites/singleFavourite";
+import { useAppContext } from "../context/appContext";
 
 export const getStaticProps = async () => {
     try {
@@ -43,10 +55,15 @@ export const getStaticProps = async () => {
 };
 
 const Home = ({ countries, worldInfo }) => {
+    let { favouriteRegions, setFavouriteRegions } = useAppContext();
+
     const [regionLoading, setRegionLoading] = useState(false);
     const [regionError, setRegionError] = useState(null);
     const [searchedValue, setSearchedValue] = useState({ value: "World" });
     const [multipleSelected, setMultipleSelected] = useState(false);
+
+    // visually show favorite regions
+    const [isFavouriteClass, setIsFavouriteClass] = useState("");
 
     // data to display
     // null for initial load
@@ -152,14 +169,68 @@ const Home = ({ countries, worldInfo }) => {
     // show an info instead of map when comparison button is clicked
     useEffect(() => {
         setRegionError("search/compare for detail(s)...");
+        setIsFavouriteClass(false);
     }, [multipleSelected]);
+
+    // useEffect(() => {
+    //     let favorites = JSON.parse(localStorage.getItem("favouriteRegions"));
+    //     if (!favorites) {
+    //         favorites = {
+    //             single: [],
+    //             multiple: [],
+    //         };
+    //         localStorage.setItem("favouriteRegions", JSON.stringify(favorites));
+    //     }
+    //     setFavouriteRegions(favorites);
+    // }, []);
+
+    useEffect(() => {
+        let { single, multiple } = favouriteRegions;
+        if (multipleSelected) {
+            if (!multiple) {
+                setIsFavouriteClass(false);
+                return;
+            }
+            let checkIfItIsFavourite = multipleFavoriteFound(
+                searchedValue,
+                multiple
+            ).found;
+            setIsFavouriteClass(!(checkIfItIsFavourite === -1));
+        } else {
+            if (!single) {
+                setIsFavouriteClass(false);
+                return;
+            }
+            let checkIfItIsFavourite = singleFavouriteFound(
+                searchedValue,
+                single
+            ).found;
+            setIsFavouriteClass(!(checkIfItIsFavourite === -1));
+        }
+    }, [favouriteRegions, searchedValue]);
+
+    const handleFavourite = () => {
+        let { single, multiple } = favouriteRegions;
+        if (multipleSelected) {
+            multiple = multipleFavorites(searchedValue, multiple);
+        } else {
+            single = singleFavourite(searchedValue, single);
+        }
+        setFavouriteRegions({ single, multiple });
+        localStorage.setItem(
+            "favouriteRegions",
+            JSON.stringify({ single, multiple })
+        );
+    };
+
+    let enableFavourite = regionData && regionData.length !== 0;
 
     return (
         <>
             <Head></Head>
             <main className="px-4 mt-7 ">
                 <section className="mx-auto flex justify-center">
-                    <div className="flex  items-center justify-center text-lg mr-1">
+                    <div className="flex items-center justify-center text-lg mr-1">
                         <button
                             className={`text-lg ${
                                 multipleSelected &&
@@ -178,6 +249,24 @@ const Home = ({ countries, worldInfo }) => {
                         regionData={regionData}
                         multipleSelected={multipleSelected}
                     />
+                    <div className="flex items-center justify-center text-lg ml-1">
+                        <button
+                            className={`text-lg transition ${
+                                enableFavourite
+                                    ? "hover:text-blue-lighter"
+                                    : "cursor-not-allowed text-opacity-10 text-red"
+                            }`}
+                            onClick={handleFavourite}
+                        >
+                            {isFavouriteClass ? (
+                                <AiFillStar className=" text-blue" />
+                            ) : (
+                                <AiOutlineStar />
+                            )}
+                            {/* <AiOutlineStar /> */}
+                            {/* {<AiFillStar className=" text-blue" />} */}
+                        </button>
+                    </div>
                 </section>
 
                 {/* display loading/error/map */}

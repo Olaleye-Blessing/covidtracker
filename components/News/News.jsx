@@ -13,7 +13,7 @@ const News = ({ news }) => {
     };
 
     return (
-        <li className="max-w-md sm:w-full  mx-auto mt-4 border rounded border-blue-lighter relative overflow-hidden">
+        <li className="max-w-md sm:w-full mx-auto mt-4 border border-blue-lighter relative overflow-hidden rounded-lg">
             {thumbnail && (
                 <div className="absolute inset-0 z-0">
                     <Image
