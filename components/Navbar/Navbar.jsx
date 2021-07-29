@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { RiVirusLine } from "react-icons/ri";
 import { VscCompareChanges } from "react-icons/vsc";
@@ -10,7 +10,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
-    let router = useRouter();
+    let { pathname } = useRouter();
+
     const [showMobileNav, setShowMobileNav] = useState(false);
 
     let navLinks = [
@@ -34,6 +35,10 @@ const Navbar = () => {
         listRef.current.classList.toggle("left-0");
         listRef.current.classList.toggle("-left-full");
     };
+
+    useEffect(() => {
+        toggleNav();
+    }, [pathname]);
 
     return (
         <nav className="flex items-center justify-between px-4 py-4 bg-white relative shadow-sm sm:shadow-md">
