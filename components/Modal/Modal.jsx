@@ -104,7 +104,7 @@ const Modal = ({ onClick, setSearchedValue, setMultipleSelected }) => {
                                 })}
                             </ul>
                         ) : (
-                            <ul className="flex flex-wrap gap-x-5 gap-y-3">
+                            <ul className="flex flex-wrap gap-x-5 gap-y-3 items-center justify-center">
                                 {multiple.map((regions, i) => {
                                     return (
                                         <li key={i} className="">
