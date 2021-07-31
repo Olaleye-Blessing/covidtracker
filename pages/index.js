@@ -25,6 +25,7 @@ import {
     singleFavouriteFound,
 } from "../utility/favourites/singleFavourite";
 import { useAppContext } from "../context/appContext";
+import Modal from "../components/Modal/Modal";
 
 export const getStaticProps = async () => {
     try {
@@ -55,7 +56,8 @@ export const getStaticProps = async () => {
 };
 
 const Home = ({ countries, worldInfo }) => {
-    let { favouriteRegions, setFavouriteRegions } = useAppContext();
+    let { favouriteRegions, setFavouriteRegions, setRegionsWithFlag } =
+        useAppContext();
 
     const [regionLoading, setRegionLoading] = useState(false);
     const [regionError, setRegionError] = useState(null);
@@ -64,6 +66,12 @@ const Home = ({ countries, worldInfo }) => {
 
     // visually show favorite regions
     const [isFavouriteClass, setIsFavouriteClass] = useState("");
+
+    const [showModal, setShowModal] = useState(false);
+
+    const toggleModal = (show) => {
+        setShowModal(show);
+    };
 
     // data to display
     // null for initial load
@@ -104,6 +112,11 @@ const Home = ({ countries, worldInfo }) => {
         setMultipleSelected((prev) => !prev);
         setRegionData(null);
     };
+
+    useEffect(() => {
+        setRegionsWithFlag(items);
+        console.log("set...");
+    }, []);
 
     useEffect(() => {
         // this is for initial load
@@ -225,6 +238,7 @@ const Home = ({ countries, worldInfo }) => {
 
     let enableFavourite = regionData && regionData.length !== 0;
 
+    // console.log(searchedValue);
     return (
         <>
             <Head></Head>
@@ -263,8 +277,6 @@ const Home = ({ countries, worldInfo }) => {
                             ) : (
                                 <AiOutlineStar />
                             )}
-                            {/* <AiOutlineStar /> */}
-                            {/* {<AiFillStar className=" text-blue" />} */}
                         </button>
                     </div>
                 </section>
@@ -287,6 +299,23 @@ const Home = ({ countries, worldInfo }) => {
                     )}
                 </section>
             </main>
+            <div className="fixed bottom-0 left-3">
+                <button
+                    className="text-blue hover:text-blue-lighter transition-all duration-200"
+                    onClick={() => {
+                        toggleModal(true);
+                    }}
+                >
+                    <AiFillStar className="text-3xl" />
+                </button>
+            </div>
+            {showModal && (
+                <Modal
+                    onClick={() => toggleModal(false)}
+                    setSearchedValue={setSearchedValue}
+                    setMultipleSelected={setMultipleSelected}
+                />
+            )}
         </>
     );
 };

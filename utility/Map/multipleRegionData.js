@@ -1,4 +1,6 @@
 const multipleRegionData = (data) => {
+    if (!Array.isArray(data)) return null;
+
     let labels = ["cases", "active", "deaths", "critical", "recovered"];
     let backgrounds = [
         "rgb(255, 99, 132)",

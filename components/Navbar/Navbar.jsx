@@ -37,7 +37,13 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-        toggleNav();
+        setShowMobileNav(false);
+        if (listRef.current.classList.contains("left-0")) {
+            listRef.current.classList.remove("left-0");
+        }
+        if (!listRef.current.classList.contains("-left-full")) {
+            listRef.current.classList.add("-left-full");
+        }
     }, [pathname]);
 
     return (
@@ -62,7 +68,7 @@ const Navbar = () => {
             </button>
             <ul
                 ref={listRef}
-                className="absolute top-16 -left-full w-full z-50 bg-white sm:static sm:flex sm:justify-end sm:gap-4"
+                className="absolute top-16 -left-full w-full z-50 bg-white sm:static sm:flex sm:justify-end sm:gap-4 sm:z-auto"
             >
                 {navLinks.map(({ path, icon }) => {
                     return (

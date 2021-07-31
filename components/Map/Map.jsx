@@ -66,6 +66,8 @@ const Map = ({ data, multipleSelected }) => {
         ? multipleRegionData(data)
         : singleRegionData(data);
 
+    if (state === null) return null;
+
     let options = {
         maintainAspectRatio: false,
         title: {

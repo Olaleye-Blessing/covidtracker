@@ -5,6 +5,7 @@ const AppContext = createContext();
 export const AppWrapper = ({ children }) => {
     // store favorite regions
     const [favouriteRegions, setFavouriteRegions] = useState({});
+    const [regionsWithFlag, setRegionsWithFlag] = useState([]);
 
     useEffect(() => {
         let favorites = JSON.parse(localStorage.getItem("favouriteRegions"));
@@ -19,7 +20,14 @@ export const AppWrapper = ({ children }) => {
     }, []);
 
     return (
-        <AppContext.Provider value={{ favouriteRegions, setFavouriteRegions }}>
+        <AppContext.Provider
+            value={{
+                favouriteRegions,
+                setFavouriteRegions,
+                regionsWithFlag,
+                setRegionsWithFlag,
+            }}
+        >
             {children}
         </AppContext.Provider>
     );
