@@ -1,20 +1,45 @@
-# Next.js + Tailwind CSS Example
+# COVID Data Tracker
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+View chart tracking cases, deaths, recovered, active and critical situation.
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+It's created with nextjs.
 
-## Preview
+## Why I worked on this project
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+My goal was to learn how **[tailwindcss works](https://tailwindcss.com/)** and broaden my knowledge on **[nextjs](https://nextjs.org/)** after learning how nextjs works by building [TRIDATON(this project shows countries' information)](https://countries-ruddy-seven.vercel.app/).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## How to navigate this project
 
-## Deploy your own
+It's a two-page project
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+1. **[Home](https://covidtracker-umber.vercel.app/)**
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+    - It has a select form that enables user to search for a country or compare up to 3 countries/continents. [Form File](https://github.com/Olaleye-Blessing/covidtracker/blob/master/components/Form/SelectSearch/SingleSelectSearch.jsx)
+    - A chart that shows the result from above. [Chart File](https://github.com/Olaleye-Blessing/covidtracker/blob/master/components/Map/Map.jsx)
+    - Favorite icon that enables user to kind of bookmark a country or compared countries/continents.
+    - Another favourite icon that pops up a modal when click. [Modal File](https://github.com/Olaleye-Blessing/covidtracker/blob/master/components/Modal/Modal.jsx)
+
+    [Homepage File](https://github.com/Olaleye-Blessing/covidtracker/blob/master/pages/index.js)
+
+2. **[News](https://covidtracker-umber.vercel.app/News)**
+
+    - Provides links to different covid news
+
+    [News File](https://github.com/Olaleye-Blessing/covidtracker/blob/master/pages/News.jsx)
+
+[Components folder](https://github.com/Olaleye-Blessing/covidtracker/tree/master/components) contains the different components used throughout the project.
+
+## If I had more time, I would change this
+
+-   Improve the layout on bigger screens
+-   Add a map page that enables user to get information by hovering the map
+-   Clear out unneccessary comments, like **[Chart file comments](https://github.com/Olaleye-Blessing/covidtracker/blob/master/components/Map/Map.jsx)**
+
+## Home page screenshot
+
+<p align="center">
+  <img src="/covidtracker.png" width="100%" title="project screenshot">
+</p>
 
 ## How to use
 
