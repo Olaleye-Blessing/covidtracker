@@ -67,6 +67,17 @@
         transform: translateY(-50%);
         background-image: url("./../assests/svg/exclamation.svg");
     }
+    .footer_bg {
+        background-image: url("./../assests/svg/covid.svg"),
+            url("./../assests/svg/covid.svg"), url("./../assests/svg/covid.svg");
+        @apply bg-no-repeat;
+        background-position: left -3rem top, right -1rem top,
+            right -1rem bottom -1rem;
+        background-size: 7.5rem 7.5rem, 3.5rem 3.5rem, 5rem 5rem;
+    }
+    .footer_bg a {
+        @apply text-white-primary text-opacity-40;
+    }
     @variants responsive {
         .home-header-bg {
             @apply bg-no-repeat;

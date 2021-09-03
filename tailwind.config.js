@@ -6,12 +6,16 @@ module.exports = {
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateColumns: {
+                "autoFit": "repeat(auto-fit, minmax(15rem, 1fr))",
+            },
+        },
         colors: {
             transparent: "transparent",
             blue: {
-                // light: "#e8f5ff",
-                // lighter: "#abd6f7",
+                light: "#e8f5ff",
+                lighter: "#abd6f7",
                 DEFAULT: "#0c90f5",
             },
             green: {
