@@ -13,7 +13,7 @@ import determineRegionUrl from "../utility/determineRegionUrlPath";
 import worldWideLabelAndOption from "../utility/worldWideLabelAndOption";
 import fetchSingleData from "../utility/fetchSingleData";
 import filterValidRegionResult from "../utility/filterValidRegionResult";
-import { AiOutlineExclamationCircle, AiOutlineStar } from "react-icons/ai";
+import { AiOutlineStar } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
 import { GiConsoleController } from "react-icons/gi";
 import {
@@ -26,14 +26,6 @@ import {
 } from "../utility/favourites/singleFavourite";
 import { useAppContext } from "../context/appContext";
 import Modal from "../components/Modal/Modal";
-import Image from "next/image";
-
-import headerBg from "./../assests/svg/girl.svg";
-import CovidBanner from "../components/pages/Home/CovidBanner";
-import CovidHistory from "../components/pages/Home/CovidHistory";
-import CovidContagion from "../components/pages/Home/CovidContagion";
-import CovidThreat from "../components/pages/Home/CovidThreat";
-import CovidPrevention from "../components/pages/Home/CovidPrevention";
 
 export const getStaticProps = async () => {
     try {
@@ -63,7 +55,7 @@ export const getStaticProps = async () => {
     }
 };
 
-const Home = ({ countries, worldInfo }) => {
+const Statistics = ({ countries, worldInfo }) => {
     let { favouriteRegions, setFavouriteRegions, setRegionsWithFlag } =
         useAppContext();
 
@@ -123,7 +115,7 @@ const Home = ({ countries, worldInfo }) => {
 
     useEffect(() => {
         setRegionsWithFlag(items);
-        // console.log("set...");
+        console.log("set...");
     }, []);
 
     useEffect(() => {
@@ -250,50 +242,8 @@ const Home = ({ countries, worldInfo }) => {
     return (
         <>
             <Head></Head>
-            {/* <main className="px-4 pt-8 home_bg_top sm:px-6 lg:px-20 xl:px-32"> */}
-            {/* <main className="px-4 pt-8 home_bg_top sm:px-6 lg:px-28"> */}
-            <main className="home_bg_top ">
-                {/* <header className="sm:home-header-bg"> */}
-                <header className="px-4 pt-8 sm:px-6 lg:px-28 md:flex items-center justify-center">
-                    <div>
-                        <div className="badge">
-                            {" "}
-                            <figure className="mr-1 text-base">
-                                <AiOutlineExclamationCircle />
-                            </figure>{" "}
-                            <span>COVID-19 Alert</span>
-                        </div>
-                        <h1>
-                            <span className="block">Stay Home</span>
-                            <span className="block -mt-1">Stay Safe</span>
-                        </h1>
-                        <p className="max-w-sm mb-2 md:max-w-md">
-                            Corona disease(COVID-19) is an infectious disease
-                            casued by a new virus. The 2019 novel corona virus
-                            (2019-nCov), officially named as COVID-19 pandemic
-                            by the WHO, has spread to more than 180 countries
-                            including China
-                        </p>
-                        <p>Stay At Home Quarantine To Stop Corona Virus</p>
-                    </div>
-                    <figure className="hidden md:flex items-center justify-center max-w-lg md:w-2/4 lg:w-11/12 lg:max-w-2xl ">
-                        <Image
-                            src={headerBg}
-                            width={400}
-                            height={400}
-                            layout="intrinsic"
-                            // layout="responsive"
-                            className="w-full"
-                        />
-                    </figure>
-                </header>
-                <CovidBanner />
-                <CovidHistory />
-                <CovidContagion />
-                <CovidThreat />
-                <CovidPrevention />
-                <CovidBanner />
-                {/* <section className="mx-auto flex justify-center">
+            <main className="px-4 mt-7 ">
+                <section className="mx-auto flex justify-center">
                     <div className="flex items-center justify-center text-lg mr-1">
                         <button
                             className={`text-lg ${
@@ -329,10 +279,10 @@ const Home = ({ countries, worldInfo }) => {
                             )}
                         </button>
                     </div>
-                </section> */}
+                </section>
 
                 {/* display loading/error/map */}
-                {/* <section className="mt-8">
+                <section className="mt-8">
                     {regionLoading ? (
                         <Spinner />
                     ) : regionError ? (
@@ -347,9 +297,9 @@ const Home = ({ countries, worldInfo }) => {
                             </figure>
                         )
                     )}
-                </section> */}
+                </section>
             </main>
-            {/* <div className="fixed bottom-0 left-3">
+            <div className="fixed bottom-0 left-3">
                 <button
                     className="text-blue hover:text-blue-lighter transition-all duration-200"
                     onClick={() => {
@@ -365,9 +315,9 @@ const Home = ({ countries, worldInfo }) => {
                     setSearchedValue={setSearchedValue}
                     setMultipleSelected={setMultipleSelected}
                 />
-            )} */}
+            )}
         </>
     );
 };
 
-export default Home;
+export default Statistics;
