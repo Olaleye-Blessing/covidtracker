@@ -16,7 +16,7 @@ const FooterText = () => {
                     <li key={href} className="mr-2">
                         <a
                             href={href}
-                            className="block w-full rounded-full p-3 bg-black-primary hover:bg-red-primary hover:bg-opacity-70"
+                            className="block w-full rounded-full p-3 bg-black-primary hover:bg-red-primary hover:text-white-primary hover:bg-opacity-70"
                         >
                             <figure>{icon}</figure>
                         </a>
