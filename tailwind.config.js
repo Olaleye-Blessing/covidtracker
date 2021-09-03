@@ -10,8 +10,8 @@ module.exports = {
         colors: {
             transparent: "transparent",
             blue: {
-                light: "#e8f5ff",
-                lighter: "#abd6f7",
+                // light: "#e8f5ff",
+                // lighter: "#abd6f7",
                 DEFAULT: "#0c90f5",
             },
             green: {
@@ -19,14 +19,17 @@ module.exports = {
             },
             white: {
                 DEFAULT: "#fff",
+                primary: "#eceff1",
             },
             red: {
                 light: "#faa2b0",
                 DEFAULT: "#f00",
+                primary: "#ff0266",
             },
             black: {
-                overlay: "rgba(0, 0, 0, 0.8)",
+                // overlay: "rgba(0, 0, 0, 0.8)",
                 DEFAULT: "#000",
+                primary: "#222222",
             },
         },
     },
