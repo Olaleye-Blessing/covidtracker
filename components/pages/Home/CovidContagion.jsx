@@ -26,7 +26,7 @@ const CovidContagion = () => {
         },
     ];
     return (
-        <section className="px-4 pt-20 mb-16 sm:px-6 lg:px-28 md:flex md:flex-row-reverse md:gap-3 md:pt-40 md:items-center md:justify-center lg:gap-8">
+        <section className="px-4 pt-20 mb-16 pb-8 sm:px-6 lg:px-28 md:flex md:flex-row-reverse md:gap-3 md:pt-40 md:items-center md:justify-center lg:gap-8">
             <div className="flex-grow max-w-lg md:max-w-xs self-start">
                 <header>
                     <div className="badge">
