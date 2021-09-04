@@ -6,11 +6,11 @@ const CovidBanner = () => {
         { text: "WorldWide Deaths", number: "58,871" },
     ];
     return (
-        <section className="mt-12 text-center max-w-2xl mx-auto">
+        <section className="mt-12 text-center max-w-2xl mx-auto w-11/12">
             <header>
                 <h2 className="">Global Stats</h2>
             </header>
-            <section className="bg-black bg-opacity-20 mt-3 shadow-xl rounded-lg pb-5">
+            <section className="bg-black bg-opacity-20 mt-3 shadow-xl rounded-lg pb-8 pt-2 px-4">
                 <ul className="flex items-center justify-center flex-wrap text-center space-x-5 py-2">
                     {bannerDet.map(({ text, number, positive }) => (
                         <li key={text} className="my-3">

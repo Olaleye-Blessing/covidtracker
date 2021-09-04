@@ -45,12 +45,14 @@
 }
 
 @layer utilities {
+    .home-covid-test {
+        @apply grid justify-items-center items-center justify-center content-center mt-10 gap-y-4;
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    }
     .home_bg_top {
         background-image: url("./../assests/svg/covid.svg"),
             url("./../assests/svg/covid.svg");
-        /* background-position: left -15% top 10%, right -12% top 0%; */
-        /* background-position: left -3rem top 10%, right -2.8rem top 0%; */
-        background-position: left -3rem top 10%, right -1% top 0%;
+        background-position: left -3rem top 1.5%, right -1% top 0%;
         background-size: auto auto, 8rem 4rem;
         @apply bg-no-repeat;
     }
