@@ -19,7 +19,7 @@ const Footer = () => {
                 <div>2021 Ncov Ltd. All rights preserevd</div>
                 <ul className="flex items-center justify-around space-x-3">
                     <li className="">
-                        <Link href="">
+                        <Link href="/">
                             <a className="underline hover:text-red-primary">
                                 terms and conditions
                             </a>
