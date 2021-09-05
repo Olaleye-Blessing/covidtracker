@@ -14,15 +14,16 @@ const CovidMap = () => {
         { country: "mx", value: 127318112 }, // mexico
     ];
     return (
-        <figure>
-            <WorldMap
+        <figure className="text-center py-10 bg-blue-lighter bg-opacity-10">
+            <div>WORLD MAP SHOWING COVID DEATHS</div>
+            <div className="text-blue text-xl">COMING SOON!!</div>
+            {/* <WorldMap
                 color="red"
-                // title="Top 10 Populous Countries"
-                title=""
+                title="Top 10 Populous Countries"
                 value-suffix="people"
                 size="lg"
                 data={data}
-            />
+            /> */}
         </figure>
     );
 };
