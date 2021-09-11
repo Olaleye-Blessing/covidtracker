@@ -50,6 +50,21 @@
     h6 {
         @apply font-bold text-white mb-2;
     }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        @apply rounded-lg bg-transparent;
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        @apply rounded-lg bg-red-primary hover:bg-red-primary hover:bg-opacity-70 transition duration-200;
+    }
 }
 
 @layer utilities {
@@ -86,20 +101,7 @@
         transform: translateY(-50%);
         background-image: url("./../assests/svg/exclamation.svg");
     }
-    .overflowBar::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        @apply rounded-lg bg-transparent;
-    }
 
-    .overflowBar::-webkit-scrollbar {
-        width: 12px;
-        @apply bg-transparent;
-    }
-
-    .overflowBar::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        @apply bg-black rounded-lg;
-    }
     .radial-gradient {
         background-image: radial-gradient(
             #ff0266,
