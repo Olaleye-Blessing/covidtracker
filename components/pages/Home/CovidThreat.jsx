@@ -1,4 +1,5 @@
 import { VscWarning } from "react-icons/vsc";
+import CovidMap from "./Map/CovidMap";
 
 const CovidThreat = () => {
     return (
@@ -17,10 +18,7 @@ const CovidThreat = () => {
                 </p>
                 <p>Most people with mild coronavirus.</p>
             </header>
-            <figure className="w-full h-72 bg-blue bg-opacity-5 text-2xl flex items-center justify-center">
-                MAP SHOWING A REGION WITH COVID CASES. HOVERING OVER IT SHOWS
-                THE CASE OF THE HOVERED REGION
-            </figure>
+            <CovidMap />
         </section>
     );
 };

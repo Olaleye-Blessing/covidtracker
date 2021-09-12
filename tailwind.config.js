@@ -35,6 +35,9 @@ module.exports = {
                 DEFAULT: "#000",
                 primary: "#222222",
             },
+            orange: {
+                DEFAULT: "#f09022",
+            },
         },
     },
     variants: {

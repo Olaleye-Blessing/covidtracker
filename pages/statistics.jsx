@@ -185,18 +185,6 @@ const Statistics = ({ countries, worldInfo }) => {
         setIsFavouriteClass(false);
     }, [multipleSelected]);
 
-    // useEffect(() => {
-    //     let favorites = JSON.parse(localStorage.getItem("favouriteRegions"));
-    //     if (!favorites) {
-    //         favorites = {
-    //             single: [],
-    //             multiple: [],
-    //         };
-    //         localStorage.setItem("favouriteRegions", JSON.stringify(favorites));
-    //     }
-    //     setFavouriteRegions(favorites);
-    // }, []);
-
     useEffect(() => {
         let { single, multiple } = favouriteRegions;
         if (multipleSelected) {
@@ -242,7 +230,7 @@ const Statistics = ({ countries, worldInfo }) => {
     return (
         <>
             <Head></Head>
-            <main className="px-4 mt-7 ">
+            <main className="px-4 mt-7 mb-24">
                 <section className="mx-auto flex justify-center">
                     <div className="flex items-center justify-center text-lg mr-1">
                         <button

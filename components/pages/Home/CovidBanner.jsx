@@ -1,10 +1,33 @@
-const CovidBanner = () => {
+import Spinner from "../../Spinner";
+
+const CovidBanner = ({ loading, error, data }) => {
+    if (loading || error) {
+        return (
+            <section className="mt-12 text-center max-w-2xl mx-auto w-11/12">
+                <header>
+                    <h2 className="">Global Stats</h2>
+                </header>
+                <section className="bg-black bg-opacity-20 mt-3 shadow-xl rounded-lg py-10 px-4 flex items-center justify-center">
+                    {loading ? (
+                        <Spinner />
+                    ) : (
+                        <div className="text-red">{error}</div>
+                    )}
+                </section>
+            </section>
+        );
+    }
+
+    let { updated } = data;
+    updated = new Date(updated);
+
     let bannerDet = [
-        { text: "Affected Country", number: 204 },
-        { text: "Confrimed Cases", number: "1,098,848" },
-        { text: "Recovered Cases", number: "226,106", positive: true },
-        { text: "WorldWide Deaths", number: "58,871" },
+        { text: "Affected Country", number: data.affectedCountries },
+        { text: "Confrimed Cases", number: data.cases },
+        { text: "Recovered Cases", number: data.recovered, positive: true },
+        { text: "WorldWide Deaths", number: data.deaths },
     ];
+
     return (
         <section className="mt-12 text-center max-w-2xl mx-auto w-11/12">
             <header>
@@ -28,12 +51,16 @@ const CovidBanner = () => {
                     ))}
                 </ul>
                 <p className="text-center">
-                    Updated less than 20 mins ago, source{" "}
+                    Updated{" "}
+                    <span className="text-blue font-bold">
+                        {updated.toLocaleDateString("en-US")}
+                    </span>
+                    , source{" "}
                     <a
-                        href="https://www.wikipedia.com"
+                        href="https://disease.sh"
                         className="text-red-primary hover:underline"
                     >
-                        wikipedia
+                        disease.sh
                     </a>
                 </p>
             </section>

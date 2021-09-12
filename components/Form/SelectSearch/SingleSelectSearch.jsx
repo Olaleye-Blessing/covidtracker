@@ -27,7 +27,7 @@ const SingleSelectSearch = ({ items, setSearchedValue, multipleSelected }) => {
             instanceId="items"
             options={items}
             onChange={handleChange}
-            className="shadow-sm max-w-lg border-0 outline-none flex-shrink-1 flex-grow"
+            className="shadow-sm max-w-lg border-0 outline-none flex-shrink-1 flex-grow text-red"
             formatOptionLabel={formatFormOptionLabel}
             placeholder={
                 multipleSelected
