@@ -68,6 +68,9 @@
 }
 
 @layer utilities {
+    .overview__list:nth-child(odd) > *:last-child {
+        @apply sm:ml-0 mr-auto;
+    }
     .box {
         @apply bg-black bg-opacity-10 rounded-lg;
     }
