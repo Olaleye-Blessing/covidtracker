@@ -63,7 +63,7 @@ const Navbar = () => {
             </button>
             <ul
                 ref={navListRef}
-                className="bg-black-primary bg-opacity-95 fixed top-12 left-0 h-0 overflow-hidden w-full max-w-xs pl-2 transition-all duration-200 sm:static sm:w-auto sm:h-auto sm:flex sm:bottom-0 sm:p-0 sm:max-w-none sm:items-center sm:justify-end sm:gap-2 sm:border-r-0 md:gap-7"
+                className="bg-black-primary bg-opacity-95 fixed top-12 left-0 h-0 overflow-hidden w-full max-w-xs pl-2 transition-all duration-200 z-40 sm:static sm:w-auto sm:h-auto sm:flex sm:bottom-0 sm:p-0 sm:max-w-none sm:items-center sm:justify-end sm:gap-2 sm:border-r-0 md:gap-7"
             >
                 {linkLists.map((link) => {
                     return <NavLink key={link.path} {...link} />;
