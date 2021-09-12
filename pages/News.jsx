@@ -66,19 +66,11 @@ const News = () => {
         setInitialLoading(true);
     }, [urlPath]);
 
-    let activeClass = "bg-blue text-white font-semibold";
-    let pathClass = `shadow-inner hover:text-white transition duration-500`;
-
     return (
         <>
             <Head></Head>
             <main className="mt-1 px-4">
-                <NewsHeaderButton
-                    pathClass={pathClass}
-                    urlPath={urlPath}
-                    activeClass={activeClass}
-                    changePath={changePath}
-                />
+                <NewsHeaderButton urlPath={urlPath} changePath={changePath} />
                 {initialLoading && <Spinner extraClass="mt-7" />}
                 {!initialLoading && (
                     <>
@@ -91,8 +83,9 @@ const News = () => {
                                     text={`${
                                         loadingMore ? "loading..." : "load more"
                                     }`}
-                                    extraClass={`flex items-center justify-center gap-2 bg-blue-lighter ${
-                                        loadingMore && "cursor-not-allowed"
+                                    extraClass={`flex items-center justify-center gap-2 bg-red-primary ${
+                                        loadingMore &&
+                                        "cursor-not-allowed bg-opacity-10"
                                     }`}
                                     onClick={handleLoadMore}
                                     disabled={loadingMore}
