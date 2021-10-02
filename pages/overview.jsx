@@ -14,6 +14,10 @@ const Overview = () => {
     const [searchData, setSearchData] = useState("");
     const [searchCountryDetail, setSearchCountryDetail] = useState(null);
 
+    const [mapCoords, setMapCoords] = useState([21.5, -80]);
+    // const [mapCoords, setMapCoords] = useState([51.505, -0.09]);
+    const [mapZoom, setMapZoom] = useState(5);
+
     useEffect(() => {
         if (data === null) {
             return;
@@ -24,7 +28,7 @@ const Overview = () => {
 
     if (loading) {
         return (
-            <div>
+            <div className="min-h-screen flex items-center justify-center">
                 <Spinner />
             </div>
         );
@@ -37,25 +41,31 @@ const Overview = () => {
     const handleSearchCountryDetail = (clickedValue) => {
         if (!clickedValue) clickedValue = searchData;
 
-        // console.log(data);
         let searched = [...data].find(
             ({ country }) =>
                 country.toLowerCase() === clickedValue.toLowerCase()
         );
-        // console.log(searched);
+
         if (!searched) return;
         setSearchCountryDetail(searched);
+        let {
+            countryInfo: { lat, long },
+        } = searched;
+        setMapCoords([lat, long]);
+        setMapZoom(4);
     };
 
     return (
         <div className="mb-10 xl:flex">
-            <main className="px-4 pt-8 sm:px-6 xl:w-full">
+            <main className="px-4 pt-8 sm:px-6 xl:w-full flex flex-col xl:sticky xl:top-0 xl:left-0 xl:self-start">
                 <OverviewHeader searchCountryDetail={searchCountryDetail} />
                 <OverviewMain
                     data={data}
                     handleSetSearchData={(country) => setSearchData(country)}
                     searchData={searchData}
                     handleSearchCountryDetail={handleSearchCountryDetail}
+                    mapCoords={mapCoords}
+                    mapZoom={mapZoom}
                 />
             </main>
             <aside className="px-4 pt-8 sm:px-6 lg:px-28 sm:flex sm:items-start xl:block xl:px-4 xl:w-full xl:max-w-max">
