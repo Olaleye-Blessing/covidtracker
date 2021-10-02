@@ -27,37 +27,42 @@ import {
 import { useAppContext } from "../context/appContext";
 import Modal from "../components/Modal/Modal";
 
-export const getStaticProps = async () => {
-    try {
-        let allCountriesUrl = `https://restcountries.eu/rest/v2/all`,
-            worldCovidInfo = `https://disease.sh/v3/covid-19/all`;
+// export const getStaticProps = async () => {
+//     try {
+//         let allCountriesUrl = `https://restcountries.eu/rest/v2/all`,
+//             worldCovidInfo = `https://disease.sh/v3/covid-19/all`;
 
-        let results = await Promise.all([
-            fetch(allCountriesUrl),
-            fetch(worldCovidInfo),
-        ]).then((responses) => Promise.all(responses.map((r) => r.json())));
+//         let results = await Promise.all([
+//             fetch(allCountriesUrl),
+//             fetch(worldCovidInfo),
+//         ]).then((responses) => Promise.all(responses.map((r) => r.json())));
 
-        let [countries, worldInfo] = results;
+//         let [countries, worldInfo] = results;
 
-        return {
-            props: {
-                countries,
-                worldInfo,
-            },
-        };
-    } catch (error) {
-        console.log(error);
-        return {
-            props: {
-                error,
-            },
-        };
-    }
-};
+//         return {
+//             props: {
+//                 countries,
+//                 worldInfo,
+//             },
+//         };
+//     } catch (error) {
+//         console.log(error);
+//         return {
+//             props: {
+//                 error,
+//             },
+//         };
+//     }
+// };
 
-const Statistics = ({ countries, worldInfo }) => {
-    let { favouriteRegions, setFavouriteRegions, setRegionsWithFlag } =
-        useAppContext();
+// const Statistics = ({ countries, worldInfo }) => {
+const Statistics = () => {
+    let {
+        favouriteRegions,
+        setFavouriteRegions,
+        setRegionsWithFlag,
+        covidData: { loading, error, data },
+    } = useAppContext();
 
     const [regionLoading, setRegionLoading] = useState(false);
     const [regionError, setRegionError] = useState(null);
@@ -78,12 +83,33 @@ const Statistics = ({ countries, worldInfo }) => {
     // undefined for not found data
     const [regionData, setRegionData] = useState(null);
 
-    countries = countries.map(({ name, flag }) => ({
-        value: name,
-        label: name,
-        flag,
-        cathegory: "country",
-    }));
+    // countries = countries.map(({ name, flag }) => ({
+    //     value: name,
+    //     label: name,
+    //     flag,
+    //     cathegory: "country",
+    // }));
+
+    // let items = [
+    //     worldWideLabelAndOption,
+    //     {
+    //         label: "Continents",
+    //         options: [...continents],
+    //     },
+    //     {
+    //         label: "Countries",
+    //         options: [...countries],
+    //     },
+    // ];
+
+    let countries = data
+        ?.slice(1)
+        .map(({ country, countryInfo: { flag } }) => ({
+            value: country,
+            label: country,
+            flag,
+            cathegory: "country",
+        }));
 
     let items = [
         worldWideLabelAndOption,
@@ -93,7 +119,7 @@ const Statistics = ({ countries, worldInfo }) => {
         },
         {
             label: "Countries",
-            options: [...countries],
+            options: countries && [...countries],
         },
     ];
 
@@ -114,9 +140,9 @@ const Statistics = ({ countries, worldInfo }) => {
     };
 
     useEffect(() => {
+        if (!data) return;
         setRegionsWithFlag(items);
-        console.log("set...");
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         // this is for initial load
@@ -226,6 +252,7 @@ const Statistics = ({ countries, worldInfo }) => {
 
     let enableFavourite = regionData && regionData.length !== 0;
 
+    // return null;
     // console.log(searchedValue);
     return (
         <>
