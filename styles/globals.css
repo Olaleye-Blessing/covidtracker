@@ -68,6 +68,17 @@
 }
 
 @layer utilities {
+    .map .leaflet-container {
+        @apply h-full rounded-md w-full;
+    }
+    .map .leaflet-popup-content-wrapper {
+        @apply bg-black-primary py-3 px-2 w-36 rounded-sm;
+    }
+
+    .map .leaflet-popup-content {
+        @apply m-0 w-full py-2 px-1 !important;
+    }
+
     .overview__list:nth-child(odd) > *:last-child {
         @apply sm:ml-0 mr-auto;
     }

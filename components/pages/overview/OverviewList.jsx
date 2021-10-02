@@ -4,7 +4,7 @@ const OverviewList = ({
     handleSearchCountryDetail,
 }) => {
     return (
-        <ul className="overflow-y-scroll h-64 mt-3 overflowBar xl:h-96 xl:sticky xl:top-0 xl:left-0">
+        <ul className="overflow-y-scroll h-64 mt-3 overflowBar md:h-[calc(450px-60px)]">
             {data.map(({ country, active }) => (
                 <li key={country} className=" ">
                     <button
