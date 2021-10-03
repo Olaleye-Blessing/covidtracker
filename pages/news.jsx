@@ -16,6 +16,7 @@ const News = () => {
     const [news, setNews] = useState([]);
     const [loadingMore, setLoadingMore] = useState(false);
     const [initialLoading, setInitialLoading] = useState(true);
+    const [newsError, setNewsError] = useState(null);
     let itemsPerPage = 20;
 
     const fetchData = useCallback(() => {
@@ -36,17 +37,27 @@ const News = () => {
         })
             .then((res) => res.json())
             .then((result) => {
+                if (result.messages) {
+                    setInitialLoading(false);
+                    return setNewsError(
+                        "Internal server error!! Please try later"
+                    );
+                }
                 let { value: news, totalCount: totalPages } = result;
                 setNews((prevNews) => [...prevNews, ...news]);
                 setTotalPages(totalPages);
                 setLoadingMore(false);
                 setInitialLoading(false);
+            })
+            .catch((e) => {
+                console.log(e);
             });
     }, [urlPath, currentPage]);
 
     const handleLoadMore = () => {
         setCurrentPage((prev) => prev + 1);
         setLoadingMore(true);
+        setNewsError(null);
     };
 
     const changePath = (path) => {
@@ -64,6 +75,7 @@ const News = () => {
         setTotalPages(null);
         setLoadingMore(false);
         setInitialLoading(true);
+        setNewsError(null);
     }, [urlPath]);
 
     return (
@@ -102,6 +114,11 @@ const News = () => {
                                         />
                                     )}
                                 </ButtonText>
+                            </div>
+                        )}
+                        {newsError && (
+                            <div className="text-red-primary text-center mb-2">
+                                {newsError}
                             </div>
                         )}
                     </>
