@@ -256,7 +256,9 @@ const Statistics = () => {
     // console.log(searchedValue);
     return (
         <>
-            <Head></Head>
+            <Head>
+                <title>Statistics || COVID TRACKER</title>
+            </Head>
             <main className="px-4 mt-7 mb-24">
                 <section className="mx-auto flex justify-center">
                     <div className="flex items-center justify-center text-lg mr-1">

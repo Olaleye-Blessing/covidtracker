@@ -68,7 +68,9 @@ const News = () => {
 
     return (
         <>
-            <Head></Head>
+            <Head>
+                <title>NEWS || COVID TRACKER</title>
+            </Head>
             <main className="mt-1 px-4">
                 <NewsHeaderButton urlPath={urlPath} changePath={changePath} />
                 {initialLoading && <Spinner extraClass="mt-7" />}
