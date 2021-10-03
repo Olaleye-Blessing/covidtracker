@@ -15,10 +15,32 @@ const Layout = ({ children }) => {
                 {/* <meta name="revised" content="7/2/2021" /> */}
                 <meta name="Authur" content="Olaleye Blessing" />
                 <meta
+                    name="keywords"
+                    content="Covid, Covid19, covid news, covid prevention, covid symptoms, covid cases, covid deaths"
+                />
+                <meta
                     httpEquiv="Content-Type"
                     content="text/html; charset = UTF-8"
                 />
                 <title>COVID TRACKER</title>
+                <link
+                    rel="apple-touch-icon"
+                    sizes="180x180"
+                    href="/apple-touch-icon.png"
+                />
+                <link
+                    rel="icon"
+                    type="image/png"
+                    sizes="32x32"
+                    href="/favicon-32x32.png"
+                />
+                <link
+                    rel="icon"
+                    type="image/png"
+                    sizes="16x16"
+                    href="/favicon-16x16.png"
+                />
+                <link rel="manifest" href="/site.webmanifest" />
             </Head>
             <>
                 <Toaster

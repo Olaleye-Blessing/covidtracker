@@ -34,7 +34,9 @@ const Prevention = () => {
     ];
     return (
         <>
-            <Head></Head>
+            <Head>
+                <title>Prevention || COVID TRACKER</title>
+            </Head>
             <main className="px-4 pt-3 mt-5 footer_bg">
                 <header className="text-center mb-10">
                     <h2>Preventions</h2>
